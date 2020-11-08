@@ -15,17 +15,16 @@ var sarejahan;
 var ground, groundImg;
 
 function preload(){
-    army_leftImg = loadImage("Images/Army_left.png");
-    army_rightImg = loadImage("Images/Army_right.png");
+    
 	terrorist_Img = loadImage("Images/Terrorist.png");
 	terroristWhenDie_Img = loadImage("Images/Terrorist_whendie.png");
     background_Img = loadImage("Images/Background.png");
     bulletImg = loadImage("Images/Bullet.png");
     bullet2Img = loadImage("Images/Bullet.png");
     boxImg = loadImage("Images/Box.png");
-  /*  gunfire = loadSound("Sound/machine-gun-01.mp3");
-    sarejahan = loadSound("Sound/Sare-Jahan-Se-Accha-Chorus.mp3");
-    groundImg = loadImage("Images/ground.png");*/
+  // gunfire = loadSound("Sound/machine-gun-01.mp3");
+    //sarejahan = loadSound("Sound/Sare-Jahan-Se-Accha-Chorus.mp3");
+    groundImg = loadImage("Images/ground.png");
 }
 
 function setup(){
@@ -33,57 +32,57 @@ function setup(){
 	engine = Engine.create();
 	world = engine.world;
 
-    bullet = createSprite(displayWidth/2-200, displayHeight/2+200, 20);
-    bullet2 = createSprite(displayWidth/2-200, displayHeight/2+200, 20);
-    box = createSprite(displayWidth/2+900, displayHeight/2+200, 20);
-    army = new Army(displayWidth/2-300, displayHeight/2+100);
+    bullet = createSprite(displayWidth/2-200, displayHeight/2+200, 20,20);
+    bullet.addImage("bullet1",bulletImg);
+    bullet2 = createSprite(displayWidth/2-200, displayHeight/2+200, 20,20);
+    bullet2.addImage("bullet2",bullet2Img);
+
+    box = createSprite(100, 100, 20,20);
+    box.addImage("box",boxImg);
+
+    army = new Army(300, 300,100,100);
+    
     ground = createSprite(displayWidth/2+300, displayHeight/2, displayWidth, 20);
+    //ground.addImage("ground",groundImg);
 
 	Engine.run(engine);
 }
 
 function draw(){
-  rectMode(CENTER);
-  background(background_Img);
-  text("Some terrorists have got India's secret information. Can you be the true hero to find it?", displayWidth/2, displayHeight/2); 
-  text("Move using the arrow keys and shoot using space bar", displayWidth/2, displayHeight/2+50);
+    rectMode(CENTER);
+    //background(background_Img);
+    stroke("red")
+    text("Some terrorists have got India's secret information. Can you be the true hero to find it?", displayWidth/2, displayHeight/2); 
+    text("Move using the arrow keys and shoot using space bar", displayWidth/2, displayHeight/2+50);
  
-  Armyfire();
-  spawnTerrorist();
-  isTouching();
-  bullet.addImage(bulletImg);
-  bullet2.addImage(bulletImg);
-  box.addImage(boxImg);
-  ground.addImage(groundImg);
+  //Armyfire();
+ // spawnTerrorist();
+ // isTouching();
+  
+  
+ drawSprites();
   
   //displaying the objects
-  army.display();
-  ellipseMode(RADIUS);
-  ellipse(bullet.position.x, bullet.position.y, 20, 20);
+  // army.display();
+ // ellipseMode(RADIUS);
+  //ellipse(bullet.position.x, bullet.position.y, 20, 20);
 
-	if(keyDown(LEFT_ARROW)){
-        changePosition(-1,0);
-        army.addImage(army_leftImg);
-    }
-    else if(keyDown(RIGHT_ARROW)){
-        changePosition(1,0);
-        army.addImage(army_rightImg);
-    }
-    else if(keyDown(UP_ARROW)){
+
+   /* else if(keyDown(UP_ARROW)){
         changePosition(0,-1);
     }
     else if(keyDown(DOWN_ARROW)){
         changePosition(0,+1);
     }
-    if(army.isTouching(box)){
+    /*if(army.isTouching(box)){
         text("Salute to the national hero", displayWidth/2, displayHeight/2);
         //enter winning sound
     }
     else if(bullet.isTouching(army)){
         text("Salute to the true Indian martyr", displayWidth/2, displayHeight/2);
         //enter winning sound
-    }
-    drawSprites();
+    }*/
+  
 }
 
 function changePosition(x,y){
@@ -123,9 +122,24 @@ function Terroristfire(){
     }
 }
 
-function isTouching(){
+/*function isTouching(){
     if(bullet.isTouching(terrorist)){
         terrorist.addImage(terroristWhenDie_Img);
         terrorist.visibility = false;
     }
   }
+*/
+
+function keyPressed(){
+    if(keyCode===LEFT_ARROW){
+       // changePosition(-1,0);
+       army.displayLeft();
+    }
+    else if(keyCode===RIGHT_ARROW){
+       // changePosition(1,0);
+        army.displayRight();
+    }
+    else{
+        army.display();
+    }
+}
